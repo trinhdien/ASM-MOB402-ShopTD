@@ -1,0 +1,45 @@
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="center">
+        <h1>Register</h1>
+        <form method="POST" onsubmit="return false" id="login">
+            <div class="txt_field">
+                <input type="text" id="fullnameID" placeholder="Tên đăng nhập" name="fullname">
+                <span></span>
+            </div>
+            <p class="err"></p>
+            <div class="txt_field">
+                <input type="email" id="emailID" placeholder="Email" name="email">
+                <span></span>
+            </div>
+            <p class="err"></p>
+            <div class="txt_field">
+                <input type="password" id="passwordID" placeholder="Mật khẩu" name="pass">
+                <span></span>
+            </div>
+            <p class="err"></p>
+            <div class="txt_field">
+                <input type="password" id="passwordID2" placeholder="Nhập lại mật khẩu" name="pass2">
+                <span></span>
+            </div>
+            <p class="err"></p>
+            <input type="submit" value="Register" id="submitID">
+            <div class="signup_link">
+                Đã có tài khoản ? <a href="/">Đăng nhập</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="js/Register.js"></script>
+
+</html>

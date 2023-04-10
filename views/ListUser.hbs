@@ -1,0 +1,175 @@
+<div class="container">
+  <!-- Content here -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link " href="/home">Trang chủ</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/userManager">Quản lý tài khoản</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/productManager">Quản lý hàng hóa</a>
+    </li>
+  </ul>
+  <h1>Danh sách tài khoản</h1>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+    style="margin-bottom: 20px;display: inline;">Thêm tài khoản</button>
+  <div style="display: inline;float: right;">
+    <form action="/searchUser" method="POST" class="input-group">
+      <input type="search" id="form1" class="form-control" placeholder="Nhập từ khóa tìm kiếm" name="text" required />
+      <button type="submit" class="btn btn-primary">
+        Tìm kiếm
+      </button>
+    </form>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Thêm tài khoản</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+        <div class="modal-body">
+
+          <form action="/userManager" method="POST" enctype="multipart/form-data" id="addUser">
+            <div class="form-group">
+              <label for="usr">Họ và tên</label>
+              <input type="text" class="form-control" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pwd">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="pwd">Mật khẩu:</label>
+              <input type="password" class="form-control" id="pass" name="pass" required>
+            </div>
+
+            <div class="form-group">
+              <label for="formFile" class="form-label">Ảnh : </label>
+              <input class="form-control" type="file" id="files" name="img" accept="image/*" required>
+            </div>
+            <p style="color: red;">{{ textRrr}}</p>
+            <button type="submit" class="btn btn-info btn-lg" style="margin-bottom: 20px;" onclick="">Thêm tài
+              khoản</button>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Họ và tên</th>
+        <th>Ảnh</th>
+        <th>Email</th>
+        <th>Chức vụ</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data}}
+      <tr>
+        <td>{{this._id}}</td>
+        <td>{{this.name}}</td>
+        <td><img src={{this.img}} alt="" width="80" height="80"></td>
+        <td>{{this.email}}</td>
+        <td>{{this.permission}}</td>
+        {{#if this.status}}
+        <td class="row">
+          <div class="col-3">
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete{{this._id}}">
+              Xóa
+            </button>
+            <div class="modal fade" id="delete{{this._id}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="delete{{this._id}}">Thông báo</h1>
+                  </div>
+                  <div class="modal-body">
+                    Bạn có muốn xóa không ?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <form action="/deleteUser" method="post">
+                      <input type="hidden" value={{this._id}} name="id">
+                      <button type="submit" class="btn btn-primary">Yes</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="col-4">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit{{this._id}}">
+              Sửa
+            </button>
+            <div class="modal fade" id="edit{{this._id}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="edit{{this._id}}">Sửa tài khoản</h1>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">&times;</button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/editUser" method="POST" enctype="multipart/form-data" id="addUser">
+                      <div class="form-group">
+                        <label for="usr">Họ và tên</label>
+                        <input type="text" class="form-control" id="fullname" name="fullname" required
+                          value='{{this.name}}'>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="pwd">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required value={{this.email}}>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="pwd">Mật khẩu:</label>
+                        <input type="password" class="form-control" id="pass" name="pass" required
+                          value={{this.password}}>
+                      </div>
+                      <div class="form-group">
+                        <label for="formFile" class="form-label">Ảnh : </label>
+                        <input class="form-control" type="file" id="files" name="img" accept="image/*">
+                      </div>
+                      <input type="hidden" name="id" value={{this._id}}>
+                      <button type="submit" class="btn btn-info btn-lg" style="margin-bottom: 20px;" onclick="">Sửa tài
+                        khoản</button>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        {{/if}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
+<script>
+  function getId() {
+    let btn_delete = document.getElementById('btn_deleteUser');
+    let btn_delete2 = document.getElementById('btn_delete');
+    btn_delete2.value = btn_delete.value;
+    console.log(btn_delete2.value);
+  }
+</script>
